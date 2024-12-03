@@ -21,6 +21,24 @@ class Day03 extends GenericDay {
 
   @override
   int solvePart2() {
-    return 0;
+    final r = RegExp(r"mul\((\d+),(\d+)\)|do\(\)|don\'t\(\)");
+    var total = 0;
+    var enable = true;
+    r.allMatches(input.asString).forEach((match) {
+      // print(match.group(0));
+      if (match.group(0) == 'do()') {
+        enable = true;
+      } else if (match.group(0) == "don't()") {
+        enable = false;
+      } else if (match.group(0)!.startsWith('mul')) {
+        if (enable) {
+          final x = int.parse(match.group(1)!);
+          final y = int.parse(match.group(2)!);
+          total += x * y;
+          // print('total: $total');
+        }
+      }
+    });
+    return total;
   }
 }
